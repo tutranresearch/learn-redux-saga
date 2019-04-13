@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  rails:
+    image: tanngoc93/herepup_rails:$DEPLOY_TAG
+    command: sh ./config/containers/bash/rails_start.sh
+    expose:
+      - "3000"
+
+  nginx:
+    image: tanngoc93/herepup_nginx:$DEPLOY_TAG
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - rails
+    depends_on:
+      - rails
